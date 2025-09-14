@@ -1,0 +1,5 @@
+---New Features---
+
+1. Changed layout to fit the screen better
+2. Removed and added new buttons
+3. Added new editor button

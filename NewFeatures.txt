@@ -1,3 +1,0 @@
----New Features---
-
-1. Changed layout to fit the screen better
