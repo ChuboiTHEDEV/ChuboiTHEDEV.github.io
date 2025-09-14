@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+  <title>RHL .V3</title>
+  <link rel="icon"  href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADNUlEQVQ4T22TW2hcVRSGvzPnNpOZyVzSyb2pHSOGkkJLTCwShQnUQp9EqFhEGhEUCkoRH8WAKOiD9E1BkURqfQn2SdJWqoFQi9G0TZDgpTWXiTmTydyn41zPxT2D4CBuNpvFYu2ff/3/WhLiLLKoxI4+4x/WhsPHo1H9WzS8G7/WHoLyUnTlgTQvlZp1/3ekVnJhoXNgerpgNuOGSGkOliUhqw6OZaO4wJYVZEsGl42DhGEYrb+tZ2xsrO/+vfuGp8ODpmhIZp1ivYHqcpHP53F3yMhyBy5RfiASIpVOk83m2wGe7AuHPUZy36CUy2M64FE8bBhxXHXBwiNhVWvobpWGqeLzuclls20AZ88e2Lh6PeX3+9E8qmjDplYzyeYylKtVHFXQr5tMTj7Bze9v0tvbx26irYWLsxeDa1/dyG3HDR5g8kj0MMlEhrpt88PtHzElm67OEJlCng7NRyDkJ5HY/ZdBKTYhSDevi5G131Eb8GEgyLn9JGWzxuWubl6qlHhf1blQzNHTE2EvsdcGMPWY82rPw1CDTwubnOs8yBvLK8yMPtqS+Z3Ve5xIxvmpe4gT+9tE+rr/A9BkIAqFW0SW7lCXXCQmYyiDfcjCVie5Q2DxBpmnThFe+ob+/h5h4z8MHMuRKifH7RdLMpf8Nq/IEaJDh4gtfM1Uclfg2ix3DfF4Jk7uhZcJXJoTIra1MDs76z7zxceViWXRu8fLraODTK3vcN6lcD5p8JcA+DwYYbqwT/HCm9jpDHZ8h+tr6zyfNSTJ4TX92Yk/R7bSv616vZoQ0iSk62yV8mxubCFpFoqjU6w18LsVqqZFMCQY7LWJiI8jHU5g3e9TkcUk6u4KZr1CtW6LSWyIWOgjCS2ErY5QanCgm53ddgDNd0Q2K+uWKGjaOTQo8+6MSv/AMAF9i2rjMGZ1u7U23107xOWrKT6b21NjMTEizeR45HTvSvpaQowBkliigYMW773l5eTIcZT+VarJUSzPJnfunqa8c4WZOS+hU4Z2+5PW6kFTyI/m54O/LC2FSyWNp8ck+8zb49rUaEM/diyjpv6wAsWUTnlvpPBz7lbqgyuZ9OtfForPgfU38oNlIIgkHOUAAAAASUVORK5CYII=">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<style>
+    body {
+   background-color: lightslategray;
+    }
+
+    @keyframes color-sway {
+      from {background-color: blue;} 
+      to {background-color: red;}
+    }
+    @keyframes select {
+      
+    }
+    #display {
+      background-color: #111;
+      background-color: #444444;
+      width: 1438px;
+      height: 698px;
+    }
+    #file_browser {
+      border-radius: 10px;
+      background-color: #c9c9c9;
+      animation-name: color-sway;
+      animation-duration: 1s;
+      width: inherit;
+    }
+    #outputTxt {
+      width: 965px;
+      min-width: 965px;
+      height: 259px;
+      border-style: double;
+      background-color: whitesmoke;
+    }
+#displayDiv {
+margin: -8px -8px;
+
+}
+
+   .hover {
+    border-radius: 4px;
+    background-color: whitesmoke; 
+    color: black; border-width: 2px; 
+    border-color: black;
+   }
+    .hover:hover {
+     padding: 5px;
+     text-shadow: 0px 0px 5px lightslategray;
+    }
+    
+</style>
+<body>
+<div style="text-align: center;" id="displayDiv">
+<div style="background-color: grey;" class="hover">
+<button id="open" type="file">Open</button>
+  <button id="run" class="hover">Run</button>
+  <button id="save" class="hover">Save</button>
+  <button id="fullscreen" class="hover">Fullscreen</button>
+  <button id="encoder" class="hover">Encode with Base 64</button>
+  <button id="decoder" class="hover">Decode Base 64</button>
+<button id="editor">Editor</button>
+</div>
+
+  <iframe id="display" srcdoc="<h1>open a file</h1>"></iframe>
+  <textarea id="outputTxt"></textarea>
+</div>
+
+</body>
+
+<script>
+let isEditing = false;
+const displayDiv = document.getElementById("displayDiv")
+const open = document.getElementById("open");
+let outputTxt = document.getElementById("outputTxt")
+let display = document.getElementById('display');
+const run = document.getElementById("run");
+const save = document.getElementById("save");
+const fullscreen = document.getElementById("fullscreen");
+const encoder = document.getElementById("encoder");
+const decoder = document.getElementById("decoder");
+const editor = document.getElementById("editor");
+
+function closeEditor() {
+$("#encoder").hide()
+$("#decoder").hide()
+$("#outputTxt").hide()
+$("#run").hide();
+$("#save").hide();
+editor.innerHTML = "Editor";
+isEditing = false;
+}
+function openEditor() {
+$("#outputTxt").show()
+$("#encoder").show()
+$("#decoder").show()
+$("#run").show();
+$("#save").show();
+isEditing = true;
+display.style.maxWidth = window.innerWidth/2 + 500 + "px";
+display.style.maxHeight =  window.innerHeight/2 + 300 + "px";
+editor.innerHTML = "Close";
+}
+
+document.body.onload = () => {
+closeEditor();
+displayDiv.style.width = window.innerWidth + "px";
+displayDiv.style.height = window.innerHeight + "px";
+}
+window.onresize = () => {
+displayDiv.style.width = window.innerWidth + "px";
+displayDiv.style.height = window.innerHeight + "px";
+}
+
+
+run.onclick = () => {
+display.setAttribute('srcdoc', outputTxt.value);
+}
+save.onclick = () => {
+  const file = new File([outputTxt.value], "MyHTML", {type: "text/html"});
+  downloadFile(file);
+}
+fullscreen.onclick = () => {
+  display.requestFullscreen();
+}
+
+encoder.onclick = () => {
+ let base64value = btoa(outputTxt.value);
+ outputTxt.value = base64value;
+}
+
+decoder.onclick = () => {
+  let base64value = atob(outputTxt.value);
+  outputTxt.value = base64value
+}
+
+open.onclick = () => {
+let browse = document.createElement("input");
+browse.type = "file";
+browse.click();
+
+browse.onchange = (e) => {
+let reader = new FileReader();
+
+reader.onload = () => {
+display.setAttribute('srcdoc', reader.result);
+outputTxt.value = display.getAttribute("srcdoc");
+}
+reader.readAsText(e.target.files[0]);
+}
+}
+
+editor.onclick = () => {
+  if (!isEditing) {
+   openEditor(); 
+   
+  } else {closeEditor();}
+
+}
+</script>
+</html>
